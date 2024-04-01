@@ -60,11 +60,11 @@ llamacpp:
 embedding:
   # Should be matching the value above in most cases
   mode: huggingface
-  ingest_mode: simple
-  embed_dim: 384 # 384 is for BAAI/bge-small-en-v1.5
+  ingest_mode: parallel
+  embed_dim: 1024 # 384 is for BAAI/bge-small-en-v1.5
 
 huggingface:
-  embedding_hf_model_name: BAAI/bge-small-en-v1.5
+  embedding_hf_model_name: mixedbread-ai/mxbai-embed-large-v1
 
 vectorstore:
   database: qdrant
@@ -72,16 +72,16 @@ vectorstore:
 nodestore:
   database: simple
 
-qdrant:
-  path: local_data/private_gpt/qdrant
+# qdrant:
+#   path: local_data/private_gpt/qdrant
 
 postgres:
   host: localhost
   port: 5432
-  database: postgres
-  user: postgres
-  password: postgres
-  schema_name: private_gpt
+  database: pgvector
+  user: pgvectoruser
+  password: pgvectorpassword
+  schema_name: private_gpt_test6
 
 sagemaker:
   llm_endpoint_name: huggingface-pytorch-tgi-inference-2023-09-25-19-53-32-140
@@ -92,8 +92,8 @@ openai:
   model: gpt-3.5-turbo
 
 ollama:
-  llm_model: llama2
-  embedding_model: nomic-embed-text
+  llm_model: mistral
+  embedding_model: mxbai-embed-large
   api_base: http://localhost:11434
   request_timeout: 120.0
 

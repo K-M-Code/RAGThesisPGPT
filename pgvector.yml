@@ -1,0 +1,31 @@
+version: '3'
+
+services:
+
+  pgvector:
+    container_name: pgvectorDatabase
+    image: pgvector/pgvector:pg16
+    ports:
+      - "5432:5432"
+    restart: always
+    environment:
+      - POSTGRES_DB=postgresDatabase
+      - POSTGRES_USER=pgvectoruser
+      - POSTGRES_PASSWORD=pgvectorpassword
+      - POSTGRES_HOST_AUTH_METHOD=trust
+    volumes:
+      - ./pgdata/postgresData:/var/lib/postgresql/data
+
+  pgadmin:
+    container_name: pgAdmin
+    image: dpage/pgadmin4
+    ports:
+      - "8080:80"
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@example.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    depends_on:
+      - pgvector
+    volumes:
+      - ./pgdata/pgadminData:/var/lib/pgadmin

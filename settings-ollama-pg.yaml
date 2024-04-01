@@ -11,11 +11,11 @@ llm:
 
 embedding:
   mode: ollama
-  embed_dim: 768
+  embed_dim: 1024
 
 ollama:
   llm_model: mistral
-  embedding_model: nomic-embed-text
+  embedding_model: mxbai-embed-large
   api_base: http://localhost:11434
 
 nodestore:
@@ -27,8 +27,7 @@ vectorstore:
 postgres:
   host: localhost
   port: 5432
-  database: postgres
-  user: postgres
-  password: admin
-  schema_name: private_gpt
-
+  database: pgvector
+  user: pgvectoruser
+  password: pgvectorpassword
+  schema_name: private_gpt_test6

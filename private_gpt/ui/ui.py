@@ -1,5 +1,6 @@
 """This file should be imported only and only if you want to run the UI locally."""
 
+import os
 import itertools
 import logging
 import time
@@ -9,7 +10,7 @@ from typing import Any
 
 import gradio as gr  # type: ignore
 from fastapi import FastAPI
-from gradio.themes.utils.colors import slate  # type: ignore
+#from gradio.themes.utils.colors import slate, sky, blue, gray, neutral  # type: ignore
 from injector import inject, singleton
 from llama_index.core.llms import ChatMessage, ChatResponse, MessageRole
 from pydantic import BaseModel
@@ -21,15 +22,23 @@ from private_gpt.server.chat.chat_service import ChatService, CompletionGen
 from private_gpt.server.chunks.chunks_service import Chunk, ChunksService
 from private_gpt.server.ingest.ingest_service import IngestService
 from private_gpt.settings.settings import settings
-from private_gpt.ui.images import logo_svg
+from private_gpt.ui.images import logo_svg, veo_dark_svg, veo_light_svg
+from private_gpt.ui.veo_color import sky, blue, veo_primary
+
+veo_primary_color = "#0075B0"
+veo_secondary_color = "#BED600"
+veo_tertiary_color = "#696969"
+
+
 
 logger = logging.getLogger(__name__)
 
 THIS_DIRECTORY_RELATIVE = Path(__file__).parent.relative_to(PROJECT_ROOT_PATH)
 # Should be "private_gpt/ui/avatar-bot.ico"
-AVATAR_BOT = THIS_DIRECTORY_RELATIVE / "avatar-bot.ico"
+# AVATAR_BOT = THIS_DIRECTORY_RELATIVE / "avatar-bot.ico"
+AVATAR_BOT = THIS_DIRECTORY_RELATIVE / "veo-bot.ico"
 
-UI_TAB_TITLE = "My Private GPT"
+UI_TAB_TITLE = "VEO Documentation GPT"
 
 SOURCES_SEPARATOR = "\n\n Sources: \n"
 
@@ -300,10 +309,10 @@ class PrivateGptUi:
         logger.debug("Creating the UI blocks")
         with gr.Blocks(
             title=UI_TAB_TITLE,
-            theme=gr.themes.Soft(primary_hue=slate),
+            theme=gr.themes.Soft(primary_hue=veo_primary),
             css=".logo { "
             "display:flex;"
-            "background-color: #C7BAFF;"
+            "background-color: #0075B0;"
             "height: 80px;"
             "border-radius: 8px;"
             "align-content: center;"
@@ -317,7 +326,8 @@ class PrivateGptUi:
             "#col { height: calc(100vh - 112px - 16px) !important; }",
         ) as blocks:
             with gr.Row():
-                gr.HTML(f"<div class='logo'/><img src={logo_svg} alt=PrivateGPT></div")
+                # gr.HTML(f"<div class='logo'/><img src={logo_svg} alt=PrivateGPT></div")
+                gr.HTML(f"<div class='logo'/><img src={veo_light_svg}><h1 style='color: #fff; margin-top: 9px; margin-left: 10px;'> Documentation GPT</h1></div")
 
             with gr.Row(equal_height=False):
                 with gr.Column(scale=3):
@@ -418,11 +428,29 @@ class PrivateGptUi:
                         inputs=system_prompt_input,
                     )
 
+                def get_model_label() -> str | None:
+                    # Determine the model label based on PGPT_PROFILES env variable.
+                    pgpt_profiles = os.environ.get("PGPT_PROFILES")
+                    if pgpt_profiles == "ollama":
+                        return settings().ollama.model
+                    elif pgpt_profiles == "vllm":
+                        return settings().openai.model
+                    else:
+                        return None
+
                 with gr.Column(scale=7, elem_id="col"):
+                    # Determine the model label based on the value of PGPT_PROFILES
+                    model_label = get_model_label()
+                    if model_label is not None:
+                        label_text = (
+                            f"LLM: {settings().llm.mode} | Model: {model_label}"
+                        )
+                    else:
+                        label_text = f"LLM: {settings().llm.mode}"
                     _ = gr.ChatInterface(
                         self._chat,
                         chatbot=gr.Chatbot(
-                            label=f"LLM: {settings().llm.mode}",
+                            label=f"LLM: {settings().llm.mode} | Model: {model_label}",
                             show_copy_button=True,
                             elem_id="chatbot",
                             render=False,
@@ -434,6 +462,8 @@ class PrivateGptUi:
                         additional_inputs=[mode, upload_button, system_prompt_input],
                     )
         return blocks
+    
+
 
     def get_ui_blocks(self) -> gr.Blocks:
         if self._ui_block is None:

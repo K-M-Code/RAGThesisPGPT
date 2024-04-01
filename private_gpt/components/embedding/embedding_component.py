@@ -1,4 +1,5 @@
 import logging
+import torch
 
 from injector import inject, singleton
 from llama_index.core.embeddings import BaseEmbedding, MockEmbedding
@@ -17,6 +18,9 @@ class EmbeddingComponent:
     def __init__(self, settings: Settings) -> None:
         embedding_mode = settings.embedding.mode
         logger.info("Initializing the embedding model in mode=%s", embedding_mode)
+        device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        
+
         match embedding_mode:
             case "huggingface":
                 try:
@@ -31,6 +35,7 @@ class EmbeddingComponent:
                 self.embedding_model = HuggingFaceEmbedding(
                     model_name=settings.huggingface.embedding_hf_model_name,
                     cache_folder=str(models_cache_path),
+                    device=device,
                 )
             case "sagemaker":
                 try:
