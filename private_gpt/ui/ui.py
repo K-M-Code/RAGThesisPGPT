@@ -1,5 +1,6 @@
 """This file should be imported if and only if you want to run the UI locally."""
 
+
 import itertools
 import logging
 import time
@@ -21,19 +22,27 @@ from private_gpt.server.chat.chat_service import ChatService, CompletionGen
 from private_gpt.server.chunks.chunks_service import Chunk, ChunksService
 from private_gpt.server.ingest.ingest_service import IngestService
 from private_gpt.settings.settings import settings
-from private_gpt.ui.images import logo_svg
+from private_gpt.ui.images import logo_svg, veo_dark_svg, veo_light_svg
+from private_gpt.ui.veo_color import sky, blue, veo_primary
+
+veo_primary_color = "#0075B0"
+veo_secondary_color = "#BED600"
+veo_tertiary_color = "#696969"
+
+
 
 logger = logging.getLogger(__name__)
 
 THIS_DIRECTORY_RELATIVE = Path(__file__).parent.relative_to(PROJECT_ROOT_PATH)
 # Should be "private_gpt/ui/avatar-bot.ico"
-AVATAR_BOT = THIS_DIRECTORY_RELATIVE / "avatar-bot.ico"
+AVATAR_BOT = THIS_DIRECTORY_RELATIVE / "veo-bot.ico"
 
-UI_TAB_TITLE = "My Private GPT"
+UI_TAB_TITLE = "VEO Documentation GPT"
 
 SOURCES_SEPARATOR = "\n\n Sources: \n"
 
 MODES = ["Query Files", "Search Files", "LLM Chat (no context from files)"]
+
 
 
 class Source(BaseModel):
@@ -300,10 +309,10 @@ class PrivateGptUi:
         logger.debug("Creating the UI blocks")
         with gr.Blocks(
             title=UI_TAB_TITLE,
-            theme=gr.themes.Soft(primary_hue=slate),
+            theme=gr.themes.Soft(primary_hue=veo_primary),
             css=".logo { "
             "display:flex;"
-            "background-color: #C7BAFF;"
+            "background-color: #0075B0;"
             "height: 80px;"
             "border-radius: 8px;"
             "align-content: center;"
@@ -317,7 +326,8 @@ class PrivateGptUi:
             "#col { height: calc(100vh - 112px - 16px) !important; }",
         ) as blocks:
             with gr.Row():
-                gr.HTML(f"<div class='logo'/><img src={logo_svg} alt=PrivateGPT></div")
+                # gr.HTML(f"<div class='logo'/><img src={logo_svg} alt=PrivateGPT></div")
+                gr.HTML(f"<div class='logo'/><img src={veo_light_svg} alt=VEO><h1 style='color: #fff; margin-top: 9px; margin-left: 10px;'> Documentation GPT</h1></div")
 
             with gr.Row(equal_height=False):
                 with gr.Column(scale=3):

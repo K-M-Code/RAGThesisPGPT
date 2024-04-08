@@ -11,11 +11,11 @@ llm:
 
 embedding:
   mode: ollama
-  embed_dim: 1024
+  embed_dim: 512
 
 ollama:
   llm_model: mistral
-  embedding_model: mxbai-embed-large
+  embedding_model: nomic-embed-text
   api_base: http://localhost:11434
 
 nodestore:
