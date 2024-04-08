@@ -1,4 +1,6 @@
-# poetry install --extras "ui llms-llama-cpp vector-stores-qdrant embeddings-huggingface"
+# poetry install --extras "ui llms-llama-cpp vector-stores-postgres storage-nodestore-postgres embeddings-huggingface llms-openai-like"
+# poetry run python scripts/setup
+# $Env:PGPT_PROFILES="local"
 server:
   env_name: ${APP_ENV:local}
 
@@ -21,7 +23,12 @@ huggingface:
   embedding_hf_model_name: BAAI/bge-small-en-v1.5
 
 vectorstore:
-  database: qdrant
+  database: postgres
 
-qdrant:
-  path: local_data/private_gpt/qdrant
+postgres:
+  host: ${PG_DATABASE_IP_VARIABLE}
+  port: ${PG_DATABASE_PORT_VARIABLE}
+  database: ${PG_DATABASE_VARIABLE}
+  user: ${PG_USER_VARIABLE}
+  password: ${PG_PASSWORD_VARIABLE}
+  schema_name: ${PG_SCHEMA_VARIABLE}

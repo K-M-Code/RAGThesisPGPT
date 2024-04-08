@@ -64,28 +64,29 @@ llamacpp:
 embedding:
   # Should be matching the value above in most cases
   mode: huggingface
-  ingest_mode: simple
+  ingest_mode: parallel
+  count_workers: 5
   embed_dim: 384 # 384 is for BAAI/bge-small-en-v1.5
 
 huggingface:
   embedding_hf_model_name: BAAI/bge-small-en-v1.5
 
 vectorstore:
-  database: qdrant
+  database: postgres
 
 nodestore:
-  database: simple
+  database: postgres
 
 qdrant:
   path: local_data/private_gpt/qdrant
 
 postgres:
-  host: localhost
-  port: 5432
-  database: postgres
-  user: postgres
-  password: postgres
-  schema_name: private_gpt
+  host: ${PG_DATABASE_IP_VARIABLE}
+  port: ${PG_DATABASE_PORT_VARIABLE}
+  database: ${PG_DATABASE_VARIABLE}
+  user: ${PG_USER_VARIABLE}
+  password: ${PG_PASSWORD_VARIABLE}
+  schema_name: ${PG_SCHEMA_VARIABLE}
 
 sagemaker:
   llm_endpoint_name: huggingface-pytorch-tgi-inference-2023-09-25-19-53-32-140
