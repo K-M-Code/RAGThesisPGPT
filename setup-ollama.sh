@@ -38,6 +38,7 @@ fi
 # Pull required Ollama repositories
 ollama pull mistral
 ollama pull mxbai-embed-large
+ollama pull nomic-embed-text:1.5
 
 # Kill Ollama CLI (if necessary)
 pkill -f ollama
@@ -89,7 +90,7 @@ tmux send-keys -t 2 'ollama serve' C-m
 
 # Run 'make run' in the fourth bottom-right pane
 tmux send-keys -t 3 'poetry install --extras "llms-ollama ui vector-stores-postgres embeddings-ollama storage-nodestore-postgres"' C-m
-tmux send-keys -t 3 'export PGPT_PROFILES="ollama-pg"' C-m
+#tmux send-keys -t 3 'export PGPT_PROFILES="ollama-pg"' C-m
 #tmux send-keys -t 3 'make run' C-m
 
 # Attach to tmux session
