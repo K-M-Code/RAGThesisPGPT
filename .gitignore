@@ -2,6 +2,8 @@
 .env
 venv
 
+./ingest/
+
 settings-me.yaml
 
 .ruff_cache
