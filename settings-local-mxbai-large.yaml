@@ -18,8 +18,8 @@ llamacpp:
 
 embedding:
   mode: huggingface
-  ingest_mode: parallel
-  count_workers: 4
+  ingest_mode: batch
+#  count_workers: 2
   embed_dim: 1024
 
 huggingface:
