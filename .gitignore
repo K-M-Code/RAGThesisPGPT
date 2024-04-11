@@ -2,9 +2,6 @@
 .env
 venv
 
-./ingest/*
-./models/*
-
 settings-me.yaml
 
 .ruff_cache
