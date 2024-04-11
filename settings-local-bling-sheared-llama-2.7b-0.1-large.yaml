@@ -9,21 +9,21 @@ llm:
   # Should be matching the selected model
   max_new_tokens: 512
   context_window: 3900
-  tokenizer: mistralai/Mistral-7B-Instruct-v0.2
+  tokenizer: llmware/bling-sheared-llama-2.7b-0.1
 
 llamacpp:
-  prompt_style: "mistral"
-  llm_hf_repo_id: TheBloke/Mistral-7B-Instruct-v0.2-GGUF
-  llm_hf_model_file: mistral-7b-instruct-v0.2.Q4_K_M.gguf
+  prompt_style: "llama2"
+  llm_hf_repo_id: Aryanne/Bling-Sheared-Llama-2.7B-0.1-gguf
+  llm_hf_model_file: q8_0-bling-sheared-llama-2.7b-0.1.gguf
 
 embedding:
   mode: huggingface
-  ingest_mode: parallel
+  ingest_mode: batch
   count_workers: 2
   embed_dim: 1024
 
 huggingface:
-  embedding_hf_model_name: mixedbread-ai/mxbai-colbert-large-v1
+  embedding_hf_model_name: mixedbread-ai/mxbai-embed-large-v1
 
 vectorstore:
   database: postgres
