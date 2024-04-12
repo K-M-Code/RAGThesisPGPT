@@ -9,16 +9,16 @@ llm:
   # Should be matching the selected model
   max_new_tokens: 512
   context_window: 3900
-  tokenizer: lmstudio-ai/gemma-2b-it-GGUF
+  tokenizer: MaziyarPanahi/gemma-2b-GGUF
 
 llamacpp:
   prompt_style: "default"
-  llm_hf_repo_id: lmstudio-ai/gemma-2b-it-GGUF
-  llm_hf_model_file: gemma-2b-it-q4_k_m.gguf
+  llm_hf_repo_id: MaziyarPanahi/gemma-2b-GGUF
+  llm_hf_model_file: gemma-2b.Q4_K_M.gguf
 
 embedding:
   mode: huggingface
-  ingest_mode: batch
+  ingest_mode: parallel
   count_workers: 2
   embed_dim: 1024
 
