@@ -9,7 +9,7 @@ llm:
   # Should be matching the selected model
   max_new_tokens: 512
   context_window: 3900
-  tokenizer: TheBloke/Llama-2-7B-GGUF
+  tokenizer: meta-llama/Llama-2-7b-hf
 
 llamacpp:
   prompt_style: "llama2"
