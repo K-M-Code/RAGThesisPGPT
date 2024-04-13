@@ -9,12 +9,12 @@ llm:
   # Should be matching the selected model
   max_new_tokens: 512
   context_window: 3900
-  tokenizer: MaziyarPanahi/gemma-2b-GGUF
+  tokenizer: google/gemma-2b
 
 llamacpp:
   prompt_style: "default"
-  llm_hf_repo_id: MaziyarPanahi/gemma-2b-GGUF
-  llm_hf_model_file: gemma-2b.Q4_K_M.gguf
+  llm_hf_repo_id: google/gemma-2b
+  llm_hf_model_file: gemma-2b.gguf
 
 embedding:
   mode: huggingface
