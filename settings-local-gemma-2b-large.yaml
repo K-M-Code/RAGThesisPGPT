@@ -12,9 +12,9 @@ llm:
   tokenizer: google/gemma-2b
 
 llamacpp:
-  prompt_style: "default"
-  llm_hf_repo_id: google/gemma-2b
-  llm_hf_model_file: gemma-2b.gguf
+  prompt_style: "gemma"
+  llm_hf_repo_id: lmstudio-ai/gemma-2b-it-GGUF
+  llm_hf_model_file: gemma-2b-it-q4_k_m.gguf
 
 embedding:
   mode: huggingface

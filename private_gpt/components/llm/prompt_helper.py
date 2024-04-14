@@ -213,9 +213,32 @@ class ChatMLPromptStyle(AbstractPromptStyle):
             [ChatMessage(content=completion, role=MessageRole.USER)]
         )
 
+class GemmaPromptStyle(AbstractPromptStyle):
+    """
+    Gemma prompt style for processing and formatting message sequences.
+
+    It uses special tags to denote the start and end of a turn:
+    `<start_of_turn>` and `<end_of_turn>`, respectively.
+    """
+
+    START_OF_TURN = "<start_of_turn>"
+    END_OF_TURN = "<end_of_turn>"
+
+    def _messages_to_prompt(self, messages: Sequence[ChatMessage]) -> str:
+        prompt = ""
+        for message in messages:
+            role = message.role
+            content = message.content or ""
+            prompt += f"{self.START_OF_TURN}{role.lower()}\n{content.strip()}\n{self.END_OF_TURN}\n"
+        return prompt
+
+    def _completion_to_prompt(self, completion: str) -> str:
+        # Assume completions are always from the model.
+        return f"{self.START_OF_TURN}model\n{completion.strip()}\n{self.END_OF_TURN}\n"
+
 
 def get_prompt_style(
-    prompt_style: Literal["default", "llama2", "tag", "mistral", "chatml"] | None
+    prompt_style: Literal["default", "llama2", "tag", "mistral", "chatml","gemma"] | None
 ) -> AbstractPromptStyle:
     """Get the prompt style to use from the given string.
 
@@ -232,4 +255,6 @@ def get_prompt_style(
         return MistralPromptStyle()
     elif prompt_style == "chatml":
         return ChatMLPromptStyle()
+    elif prompt_style == "gemma":
+        return GemmaPromptStyle()
     raise ValueError(f"Unknown prompt_style='{prompt_style}'")
