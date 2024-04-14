@@ -235,10 +235,36 @@ class GemmaPromptStyle(AbstractPromptStyle):
     def _completion_to_prompt(self, completion: str) -> str:
         # Assume completions are always from the model.
         return f"{self.START_OF_TURN}model\n{completion.strip()}\n{self.END_OF_TURN}\n"
+    
+
+class BlingShearedLlamaPromptStyle(AbstractPromptStyle):
+    """
+    BlingShearedLlama prompt style for processing and formatting message sequences.
+    
+    It uses `<human>:` to denote the user's input and `<bot:` followed by a closing `>`
+    to denote the start of the model's response. Each segment contains context and/or
+    instructions/questions formatted directly under the tags.
+    """
+
+    def _messages_to_prompt(self, messages: Sequence[ChatMessage]) -> str:
+        prompt = ""
+        for message in messages:
+            role = message.role
+            content = message.content or ""
+            if role == MessageRole.USER:
+                prompt += f"<human>: {content.strip()}\n"
+            elif role == MessageRole.ASSISTANT:
+                prompt += f"<bot: {content.strip()}>\n"
+        return prompt
+
+    def _completion_to_prompt(self, completion: str) -> str:
+        # Assume completions are always from the model.
+        return f"<bot: {completion.strip()}>\n"
+
 
 
 def get_prompt_style(
-    prompt_style: Literal["default", "llama2", "tag", "mistral", "chatml","gemma"] | None
+    prompt_style: Literal["default", "llama2", "tag", "mistral", "chatml","gemma","blingShearedLlama"] | None
 ) -> AbstractPromptStyle:
     """Get the prompt style to use from the given string.
 
@@ -257,4 +283,6 @@ def get_prompt_style(
         return ChatMLPromptStyle()
     elif prompt_style == "gemma":
         return GemmaPromptStyle()
+    elif prompt_style == "blingShearedLlama":
+        return BlingShearedLlamaPromptStyle()
     raise ValueError(f"Unknown prompt_style='{prompt_style}'")

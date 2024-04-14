@@ -117,7 +117,7 @@ class NodeStoreSettings(BaseModel):
 class LlamaCPPSettings(BaseModel):
     llm_hf_repo_id: str
     llm_hf_model_file: str
-    prompt_style: Literal["default", "llama2", "tag", "mistral", "chatml","gemma"] = Field(
+    prompt_style: Literal["default", "llama2", "tag", "mistral", "chatml","gemma","blingShearedLlama"] = Field(
         "llama2",
         description=(
             "The prompt style to use for the chat engine. "
