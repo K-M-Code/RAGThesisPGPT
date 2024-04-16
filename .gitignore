@@ -1,6 +1,9 @@
 .venv
 .env
 venv
+setup-local-9windows.sh
+setup-local.sh
+setup-ollama.sh
 
 settings-me.yaml
 
