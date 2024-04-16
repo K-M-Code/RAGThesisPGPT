@@ -4,6 +4,7 @@ venv
 setup-local-9windows.sh
 setup-local.sh
 setup-ollama.sh
+setup-pgvector.sh
 
 settings-me.yaml
 
