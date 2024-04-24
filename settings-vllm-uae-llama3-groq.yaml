@@ -1,0 +1,37 @@
+server:
+  env_name: ${APP_ENV:vllm}
+
+llm:
+  mode: openailike
+  max_new_tokens: 512
+  context_window: 3900
+  tokenizer: mistralai/Mistral-7B-Instruct-v0.2
+
+embedding:
+  mode: huggingface
+  ingest_mode: batch
+#  count_workers: 2
+  embed_dim: 1024
+
+huggingface:
+  embedding_hf_model_name: WhereIsAI/UAE-Large-V1
+
+vectorstore:
+  database: postgres
+
+nodestore:
+  database: postgres
+
+openai:
+  prompt_style: "mistral"
+  api_base: ${API_URL}
+  api_key: ${API_KEY}
+  model: mixtral-8x7b-32768
+
+postgres:
+  host: ${PG_DATABASE_IP_VARIABLE}
+  port: ${PG_DATABASE_PORT_VARIABLE}
+  database: ${PG_DATABASE_VARIABLE}
+  user: ${PG_USER_VARIABLE}
+  password: ${PG_PASSWORD_VARIABLE}
+  schema_name: ${PG_SCHEMA_VARIABLE}
