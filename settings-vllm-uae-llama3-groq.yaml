@@ -26,7 +26,7 @@ openai:
   prompt_style: "mistral"
   api_base: ${API_URL}
   api_key: ${API_KEY}
-  model: mixtral-8x7b-32768
+  model: llama3-70b-8192
 
 postgres:
   host: ${PG_DATABASE_IP_VARIABLE}

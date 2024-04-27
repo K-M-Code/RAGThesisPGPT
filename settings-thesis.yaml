@@ -1,0 +1,41 @@
+server:
+  env_name: ${APP_ENV:ollama}
+
+llm:
+  mode: ollama
+  # Should be matching the selected model
+  max_new_tokens: 512
+  context_window: 3900
+  tokenizer: mistralai/Mistral-7B-Instruct-v0.2
+
+llamacpp:
+  prompt_style: "mistral"
+  llm_hf_repo_id: TheBloke/Mistral-7B-Instruct-v0.2-GGUF
+  llm_hf_model_file: mistral-7b-instruct-v0.2.Q4_K_M.gguf
+
+embedding:
+  mode: ollama
+  ingest_mode: parallel
+  count_workers: 2
+  embed_dim: 1024
+
+ollama:
+  llm_model: llama3:70b
+  embedding_model: mxbai-embed-large
+  api_base: https://txfsr340p9at8b-11434.proxy.runpod.net
+  embedding_api_base: https://txfsr340p9at8b-11434.proxy.runpod.net
+
+
+huggingface:
+  embedding_hf_model_name: WhereIsAI/UAE-Large-V1
+
+vectorstore:
+  database: postgres
+
+postgres:
+  host: ${PG_DATABASE_IP_VARIABLE}
+  port: ${PG_DATABASE_PORT_VARIABLE}
+  database: ${PG_DATABASE_VARIABLE}
+  user: ${PG_USER_VARIABLE}
+  password: ${PG_PASSWORD_VARIABLE}
+  schema_name: ${PG_SCHEMA_VARIABLE}
