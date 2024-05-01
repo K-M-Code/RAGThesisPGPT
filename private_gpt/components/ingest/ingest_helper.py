@@ -1,10 +1,10 @@
 import logging
 from pathlib import Path
 
-from llama_index.core.readers import StringIterableReader
-from llama_index.core.readers.base import BaseReader
-from llama_index.core.readers.json import JSONReader
-from llama_index.core.schema import Document
+from llama_index.core.readers import StringIterableReader # type: ignore
+from llama_index.core.readers.base import BaseReader # type: ignore
+from llama_index.core.readers.json import JSONReader # type: ignore
+from llama_index.core.schema import Document # type: ignore
 
 logger = logging.getLogger(__name__)
 
