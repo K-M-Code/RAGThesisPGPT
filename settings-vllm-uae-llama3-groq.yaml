@@ -4,7 +4,7 @@ server:
 llm:
   mode: openailike
   max_new_tokens: 512
-  context_window: 3900
+  context_window: 8192
   tokenizer: mistralai/Mistral-7B-Instruct-v0.2
 
 embedding:
@@ -12,6 +12,9 @@ embedding:
   ingest_mode: batch
 #  count_workers: 2
   embed_dim: 1024
+
+rag:
+  similarity_top_k: 10
 
 huggingface:
   embedding_hf_model_name: WhereIsAI/UAE-Large-V1

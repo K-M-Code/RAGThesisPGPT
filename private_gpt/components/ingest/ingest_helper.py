@@ -17,6 +17,8 @@ def _try_loading_included_file_formats() -> dict[str, type[BaseReader]]:
             HWPReader,
             PDFReader,
         )
+        from llama_index.readers.file import PyMuPDFReader # type: ignore
+        from llama_index.readers.smart_pdf_loader import SmartPDFLoader # type: ignore
         from llama_index.readers.file.epub import EpubReader  # type: ignore
         from llama_index.readers.file.image import ImageReader  # type: ignore
         from llama_index.readers.file.ipynb import IPYNBReader  # type: ignore
@@ -32,7 +34,7 @@ def _try_loading_included_file_formats() -> dict[str, type[BaseReader]]:
 
     default_file_reader_cls: dict[str, type[BaseReader]] = {
         ".hwp": HWPReader,
-        ".pdf": PDFReader,
+        ".pdf": SmartPDFLoader,
         ".docx": DocxReader,
         ".pptx": PptxReader,
         ".ppt": PptxReader,

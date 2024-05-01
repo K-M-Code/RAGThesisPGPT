@@ -4,8 +4,8 @@ server:
 llm:
   mode: llamacpp
   # Should be matching the selected model
-  max_new_tokens: 512
-  context_window: 3900
+  max_new_tokens: 1024
+  context_window: 8192
   tokenizer: mistralai/Mistral-7B-Instruct-v0.2
 
 llamacpp:
@@ -18,6 +18,16 @@ embedding:
   ingest_mode: batch
   count_workers: 2
   embed_dim: 1024
+
+rag:
+  similarity_top_k: 20
+
+openai:
+  prompt_style: "mistral"
+  api_base: ${API_URL}
+  api_key: ${API_KEY}
+  model: llama3-70b-8192
+
 
 huggingface:
   embedding_hf_model_name: mixedbread-ai/mxbai-embed-large-v1
